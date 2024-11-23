@@ -27,6 +27,10 @@ void Actuator::iterate() {
     on_time++;
 }
 
+double Actuator::get_power_consumption() { return power_consumption; }
+
+int Actuator::get_on_time() {return on_time;}
+
 double Actuator::get_power_consumed(){ return on_time * power_consumption;}
 
 bool Actuator::get_state() { return Actuator::state; }

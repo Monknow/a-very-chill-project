@@ -9,6 +9,8 @@ public:
     void iterate();
     double get_power_consumed();
     bool get_state();
+    double get_power_consumption();
+    int get_on_time();
 
 private:
     bool state;
