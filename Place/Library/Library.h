@@ -1,9 +1,6 @@
 #ifndef LIBRARY
 #define LIBRARY
-#include "../Place.cpp"
-#include <iostream>
-
-using namespace std;
+#include "../Place.h"
 
 class Library : public Place
 {
