@@ -1,6 +1,6 @@
 #ifndef LIBRARY
 #define LIBRARY
-#include "../Place.cpp"
+#include "../Place.h"
 #include <iostream>
 
 using namespace std;

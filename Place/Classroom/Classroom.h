@@ -1,6 +1,6 @@
 #ifndef CLASSROOM
 #define CLASSROOM
-#include "../Place.cpp"
+#include "../Place.h"
 #include <iostream>
 
 using namespace std;
