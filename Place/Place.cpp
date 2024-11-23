@@ -5,24 +5,25 @@ Place::Place(string instance_name, double instance_temperature_indoor, double in
     name = instance_name;
     temperature_indoor = instance_temperature_indoor;
     temperature_outdoor = instance_temperature_outdoor;
-    temperature_delta = instance_temperature_outdoor - instance_temperature_indoor;
     ambient_room_rate = instance_ambient_room_rate;
     bool busy_hours[24];
 
     cout << name << " at " << time << " is " << temperature_indoor << "C" << endl;
 }
 
-void Place::updateTemperature(bool state)
+void Place::updateTemperature(bool state, double temperature_chilled_water, double temperature_transfer_coefficient)
 {
     time++;
 
     if (state)
     {
+        double temperature_delta = temperature_indoor - temperature_chilled_water;
+        temperature_indoor = temperature_indoor - temperature_transfer_coefficient * temperature_delta;
     }
     else
     {
+        double temperature_delta = temperature_outdoor - temperature_indoor;
         temperature_indoor = temperature_indoor + ambient_room_rate * temperature_delta;
-        temperature_delta = temperature_outdoor - temperature_indoor;
     }
     cout << name << " at " << time << " is " << temperature_indoor << "C" << endl;
 }

@@ -8,7 +8,7 @@ class Place
 {
 public:
     Place(string instance_name, double instance_temperature_indoor, double instance_ambient_room_rate, double instance_temperature_outdoor, bool instance_busy_hours[24]);
-    void updateTemperature(bool state);
+    void updateTemperature(bool state, double temperature_chilled_water, double temperature_transfer_coefficient);
 
 private:
     int time = 0;
@@ -16,7 +16,6 @@ private:
     double ambient_room_rate;
     double temperature_outdoor;
     double temperature_indoor;
-    double temperature_delta;
     bool busy_hours[24];
 };
 
