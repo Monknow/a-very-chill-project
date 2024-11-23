@@ -1,5 +1,6 @@
 #include "Circuits.h"
 #include <iostream>
+#include <string>
 
 using namespace std;
 
@@ -7,6 +8,31 @@ using namespace std;
 Circuit::Circuit(Pump a_pumps[], int a_n_of_pumps):n_of_pumps(a_n_of_pumps) {
     for (int i = 0; i < n_of_pumps; i++) {
         pumps[i] = a_pumps[i];
+    }
+}
+
+// Overload constructor for built in initialization of Pumps
+Circuit::Circuit(int a_n_of_pumps, string pump_type ):n_of_pumps(a_n_of_pumps) {
+    
+    if (pump_type == "ChillWaterPump")
+    {
+        for (int i = 0; i < n_of_pumps; i++) {
+            pumps[i] = ChillWaterPump(); 
+        }
+    }
+
+    else if (pump_type == "CondensedWaterPump")
+    {
+        for (int i = 0; i < n_of_pumps; i++) {
+            pumps[i] = CondensedWaterPump();
+        }
+    }
+
+    else if (pump_type == "RecirculatingPump")
+    {
+        for (int i = 0; i < n_of_pumps; i++) {
+            pumps[i] = RecirculatingPump();
+        }
     }
 }
 
@@ -75,3 +101,7 @@ int Circuit::get_pumps_on_time() {
 }
 
 double Circuit::get_pumps_total_energy_consumption() { return get_pumps_on_time() * pumps[0].get_power_consumption(); }
+
+int Circuit::get_total_on_time(){return 0;}
+
+int Circuit::get_total_energy_consuption(){return 0;}

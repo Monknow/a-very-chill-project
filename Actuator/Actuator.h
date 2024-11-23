@@ -4,6 +4,7 @@
 class Actuator
 {
 public:
+    Actuator();
     Actuator(double a_power_consuption);
     bool switch_state();
     void iterate();

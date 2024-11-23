@@ -1,7 +1,9 @@
 #ifndef PUMP
+#define PUMP
+
 #include "../Actuator.h"
 
-class Pump : public Actuator
+class Pump : public Actuator 
 {
 public:
     Pump();

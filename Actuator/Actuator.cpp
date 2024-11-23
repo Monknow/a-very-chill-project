@@ -1,5 +1,7 @@
 #include "Actuator.h"
 
+Actuator::Actuator(){};
+
 Actuator::Actuator(double a_power_consuption)
     : 
     state(false),
