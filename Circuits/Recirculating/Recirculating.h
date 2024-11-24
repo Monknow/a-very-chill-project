@@ -1,15 +1,30 @@
 #include "../Circuits.h"
 #include "../../Actuator/FCU/FCU.h"
+#include <string>
 
 class RecirculatingCircuit : public Circuit
 {
-private:
+protected:
     FCU fcu;
 
 public:
     RecirculatingCircuit(int n_of_pumps);
+    virtual void cool();
     int get_FCU_on_time();
     int get_total_energy_consuption();
     int get_total_on_time();
 };
 
+
+
+class AulasIRecirculatingCircuit : public RecirculatingCircuit
+{
+private:
+    FCU fcu_2;
+    double one_pump_TTCf;
+    double two_pump_TTCf;
+
+public:
+    AulasIRecirculatingCircuit();
+    double get_cooling_capacity();
+};
