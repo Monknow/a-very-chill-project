@@ -49,3 +49,71 @@ double AulasIRecirculatingCircuit::get_cooling_capacity() {
 
     return cooling_capacity;
 }
+
+AulasIIRecirculatingCircuit::AulasIIRecirculatingCircuit(): RecirculatingCircuit(2), one_pump_TTCf(0.25), two_pump_TTCf(0.4) {}
+
+double AulasIIRecirculatingCircuit::get_cooling_capacity() {
+    if (!fcu.get_state())
+    {
+        cout << "Unable to cool, Aulas II FCU not turned on!!" << endl;
+        return 0;
+    }
+
+    double cooling_capacity {0};
+
+    switch (get_pumps_on())
+    {
+    case 0:
+        cooling_capacity = 0;
+        break;
+    case 1:
+        cooling_capacity = one_pump_TTCf;
+        break;
+    
+    case 2:
+        cooling_capacity = two_pump_TTCf;
+        break;
+
+    default:
+        cout << "ERROR: Unexpected code excecution on Recirculating.cpp please report it" << endl;
+        break;
+    }
+
+    return cooling_capacity;
+}
+
+
+BiblioTECRecirculatingCircuit::BiblioTECRecirculatingCircuit(): RecirculatingCircuit(3), one_pump_TTCf(0.2), two_pump_TTCf(0.3), three_pump_TTCf(0.4) {}
+
+double BiblioTECRecirculatingCircuit::get_cooling_capacity() {
+    if (!fcu.get_state())
+    {
+        cout << "Unable to cool, BiblioTEC FCU not turned on!!" << endl;
+        return 0;
+    }
+
+    double cooling_capacity {0};
+
+    switch (get_pumps_on())
+    {
+    case 0:
+        cooling_capacity = 0;
+        break;
+    case 1:
+        cooling_capacity = one_pump_TTCf;
+        break;
+    
+    case 2:
+        cooling_capacity = two_pump_TTCf;
+        break;
+
+    case 3:
+        cooling_capacity = three_pump_TTCf;
+        break;
+    default:
+        cout << "ERROR: Unexpected code excecution on Recirculating.cpp please report it" << endl;
+        break;
+    }
+
+    return cooling_capacity;
+}

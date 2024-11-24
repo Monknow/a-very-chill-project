@@ -28,3 +28,27 @@ public:
     AulasIRecirculatingCircuit();
     double get_cooling_capacity();
 };
+
+class AulasIIRecirculatingCircuit : public RecirculatingCircuit
+{
+private:
+    double one_pump_TTCf;
+    double two_pump_TTCf;
+
+public:
+    AulasIIRecirculatingCircuit();
+    double get_cooling_capacity();
+};
+
+class BiblioTECRecirculatingCircuit : public RecirculatingCircuit
+{
+private:
+    double one_pump_TTCf;
+    double two_pump_TTCf;
+    double three_pump_TTCf;
+
+
+public:
+    BiblioTECRecirculatingCircuit();
+    double get_cooling_capacity();
+};
