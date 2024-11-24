@@ -9,7 +9,7 @@ protected:
 
 public:
     RecirculatingCircuit(int n_of_pumps);
-    virtual double get_cooling_capacity();
+    virtual double get_temperature_transfer_coefficient();
     int get_FCU_on_time();
     int get_total_energy_consuption();
     int get_total_on_time();
@@ -26,7 +26,7 @@ private:
 
 public:
     AulasIRecirculatingCircuit();
-    double get_cooling_capacity();
+    double get_temperature_transfer_coefficient();
 };
 
 class AulasIIRecirculatingCircuit : public RecirculatingCircuit
@@ -37,7 +37,7 @@ private:
 
 public:
     AulasIIRecirculatingCircuit();
-    double get_cooling_capacity();
+    double get_temperature_transfer_coefficient();
 };
 
 class BiblioTECRecirculatingCircuit : public RecirculatingCircuit
@@ -50,5 +50,5 @@ private:
 
 public:
     BiblioTECRecirculatingCircuit();
-    double get_cooling_capacity();
+    double get_temperature_transfer_coefficient();
 };

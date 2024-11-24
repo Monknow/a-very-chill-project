@@ -16,13 +16,13 @@ int RecirculatingCircuit::get_FCU_on_time(){ return fcu.get_on_time(); }
 
 int RecirculatingCircuit::get_total_on_time() { return fcu.get_on_time() + get_pumps_on_time(); }
 
-double RecirculatingCircuit::get_cooling_capacity() { return 0; }
+double RecirculatingCircuit::get_temperature_transfer_coefficient() { return 0; }
 
 int RecirculatingCircuit::get_total_energy_consuption() { return fcu.get_power_consumed() + get_pumps_total_energy_consumption(); }
 
 AulasIRecirculatingCircuit::AulasIRecirculatingCircuit(): RecirculatingCircuit(2), fcu_2(FCU()), one_pump_TTCf(0.3), two_pump_TTCf(0.4) {}
 
-double AulasIRecirculatingCircuit::get_cooling_capacity() {
+double AulasIRecirculatingCircuit::get_temperature_transfer_coefficient() {
     if (!fcu.get_state() || !fcu_2.get_state())
     {
         cout << "Unable to cool, one or more of Aulas I FCU not turned on!!" << endl;
@@ -54,7 +54,7 @@ double AulasIRecirculatingCircuit::get_cooling_capacity() {
 
 AulasIIRecirculatingCircuit::AulasIIRecirculatingCircuit(): RecirculatingCircuit(2), one_pump_TTCf(0.25), two_pump_TTCf(0.4) {}
 
-double AulasIIRecirculatingCircuit::get_cooling_capacity() {
+double AulasIIRecirculatingCircuit::get_temperature_transfer_coefficient() {
     if (!fcu.get_state())
     {
         cout << "Unable to cool, Aulas II FCU not turned on!!" << endl;
@@ -87,7 +87,7 @@ double AulasIIRecirculatingCircuit::get_cooling_capacity() {
 
 BiblioTECRecirculatingCircuit::BiblioTECRecirculatingCircuit(): RecirculatingCircuit(3), one_pump_TTCf(0.2), two_pump_TTCf(0.3), three_pump_TTCf(0.4) {}
 
-double BiblioTECRecirculatingCircuit::get_cooling_capacity() {
+double BiblioTECRecirculatingCircuit::get_temperature_transfer_coefficient() {
     if (!fcu.get_state())
     {
         cout << "Unable to cool, BiblioTEC FCU not turned on!!" << endl;
