@@ -9,7 +9,7 @@ protected:
 
 public:
     RecirculatingCircuit(int n_of_pumps);
-    virtual void cool();
+    virtual double get_cooling_capacity();
     int get_FCU_on_time();
     int get_total_energy_consuption();
     int get_total_on_time();

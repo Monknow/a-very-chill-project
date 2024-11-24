@@ -16,6 +16,8 @@ int RecirculatingCircuit::get_FCU_on_time(){ return fcu.get_on_time(); }
 
 int RecirculatingCircuit::get_total_on_time() { return fcu.get_on_time() + get_pumps_on_time(); }
 
+double RecirculatingCircuit::get_cooling_capacity() { return 0; }
+
 int RecirculatingCircuit::get_total_energy_consuption() { return fcu.get_power_consumed() + get_pumps_total_energy_consumption(); }
 
 AulasIRecirculatingCircuit::AulasIRecirculatingCircuit(): RecirculatingCircuit(2), fcu_2(FCU()), one_pump_TTCf(0.3), two_pump_TTCf(0.4) {}
