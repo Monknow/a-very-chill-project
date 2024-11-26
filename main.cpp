@@ -1,5 +1,5 @@
-#include "./Place/Library/Library.h"
 #include "./Place/Classroom/Classroom.h"
+#include "./Circuits/Recirculating/Recirculating.h"
 #include <iostream>
 
 using namespace std;
@@ -88,11 +88,16 @@ bool busy_hours_aulas_ii[24] = {
 int main()
 {
 
-    Library library(16, 25, busy_hours_library);
-    Classroom aulasI("Aulas I", 27, 30, busy_hours_aulas_ii);
+    double initial_temperature_indoor = 16;
+    double temperature_outdoor_temperature = 25;
 
-    aulasI.updateTemperature(true, 10, 0.4);
-    // library.updateTemperature(false, 10);
+    AulasIRecirculatingCircuit aulasIRecirculatingCircuit{};
+    Classroom aulasI("Aulas I", initial_temperature_indoor, temperature_outdoor_temperature, busy_hours_aulas_ii, aulasIRecirculatingCircuit);
+
+    for (int hour = 0; hour < 24; hour++)
+    {
+        aulasI.updateTemperature(true, 10, 0.4);
+    }
 
     return 0;
 }
