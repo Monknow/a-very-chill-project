@@ -1,3 +1,6 @@
+#ifndef RECIRCULATING
+#define RECIRCULATING
+
 #include "../Circuits.h"
 #include "../../Actuator/FCU/FCU.h"
 #include <string>
@@ -51,4 +54,7 @@ private:
 public:
     BiblioTECRecirculatingCircuit();
     double get_temperature_transfer_coefficient();
+    double get_cooling_capacity( double RToff, double TCh );
 };
+
+#endif

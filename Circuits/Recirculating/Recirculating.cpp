@@ -119,3 +119,10 @@ double BiblioTECRecirculatingCircuit::get_temperature_transfer_coefficient() {
 
     return cooling_capacity;
 }
+
+
+double BiblioTECRecirculatingCircuit::get_cooling_capacity( double RToff, double TCh ) {
+
+    double cooling_capacity =  (RToff - TCh) * get_temperature_transfer_coefficient();
+    return cooling_capacity;
+}
