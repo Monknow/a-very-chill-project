@@ -12,6 +12,8 @@ public:
     bool get_state();
     double get_power_consumption();
     int get_on_time();
+    void turn_off();
+    void turn_on();
 
 private:
     bool state;

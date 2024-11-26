@@ -29,6 +29,14 @@ void Actuator::iterate() {
     on_time++;
 }
 
+void Actuator::turn_on() {
+    Actuator::state = true;
+}
+
+void Actuator::turn_off() {
+    Actuator::state = true;
+}
+
 double Actuator::get_power_consumption() { return power_consumption; }
 
 int Actuator::get_on_time() {return on_time;}

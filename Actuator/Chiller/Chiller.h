@@ -6,11 +6,8 @@
 
 class Chiller : public Actuator
 {
-private:
-    Pump pumps[8];
-
-public:
-    Chiller(Pump a_pumps[8]);
+    public:
+        Chiller();
 };
 
 #endif
