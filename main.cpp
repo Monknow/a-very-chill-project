@@ -94,5 +94,6 @@ int main()
     aulasI.updateTemperature(true, 10, 0.4);
     // library.updateTemperature(false, 10);
 
+    
     return 0;
 }
