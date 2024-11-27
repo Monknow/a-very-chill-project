@@ -9,16 +9,17 @@ Place::Place(string instance_name, double instance_temperature_indoor, double in
     ambient_room_rate = instance_ambient_room_rate;
     bool busy_hours[24];
     recirculating_circuit = instance_recirculating_circuit;
-
-    cout << name << " at " << time << " is " << temperature_indoor << "C" << endl;
 }
 
-void Place::updateTemperature(bool state, double temperature_chilled_water, double temperature_transfer_coefficient)
+void Place::updateTemperature(bool state, double temperature_chilled_water, double new_temperature_outdoor)
 {
+    temperature_outdoor = new_temperature_outdoor;
     time++;
 
     if (state)
     {
+        double temperature_transfer_coefficient = recirculating_circuit.get_temperature_transfer_coefficient();
+
         double temperature_delta = temperature_indoor - temperature_chilled_water;
         temperature_indoor = temperature_indoor - temperature_transfer_coefficient * temperature_delta;
     }
@@ -27,5 +28,24 @@ void Place::updateTemperature(bool state, double temperature_chilled_water, doub
         double temperature_delta = temperature_outdoor - temperature_indoor;
         temperature_indoor = temperature_indoor + ambient_room_rate * temperature_delta;
     }
-    cout << name << " at " << time << " is " << temperature_indoor << "C" << endl;
+}
+
+double Place::get_indoor_temperature()
+{
+    return temperature_indoor;
+}
+
+void Place::turn_on_fcu()
+{
+    recirculating_circuit.turn_on_fcu();
+}
+
+void Place::turn_on_pumps(int n)
+{
+    recirculating_circuit.turn_on_pumps(n);
+}
+
+void Place::turn_off_pumps(int n)
+{
+    recirculating_circuit.turn_off_pumps(n);
 }

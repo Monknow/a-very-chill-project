@@ -2,8 +2,7 @@
 #include "../../Actuator/Tower/Tower.h"
 #include "../../Actuator/Pumps/Pumps.h"
 
-
-CondensedWaterCircuit::CondensedWaterCircuit() : Circuit(8, "TowWaterPump"), water_temperature(15), tower_1(Tower()), tower_2(Tower()) {};
+CondensedWaterCircuit::CondensedWaterCircuit() : Circuit(8, "TowWaterPump"), water_temperature(22), tower_1(Tower()), tower_2(Tower()) {};
 
 int CondensedWaterCircuit::get_Towers_on_time()
 {
@@ -11,7 +10,6 @@ int CondensedWaterCircuit::get_Towers_on_time()
     int tower_2_on_time = tower_2.get_on_time();
     return tower_1_on_time + tower_2_on_time;
 };
-
 
 void CondensedWaterCircuit::turn_on_one_tower()
 {
@@ -49,7 +47,7 @@ int CondensedWaterCircuit::get_towers_on()
     return tower_1.get_state() + tower_2.get_state();
 };
 
-double CondensedWaterCircuit::get_temperature_transfer_coefficient(double Tcd)
+double CondensedWaterCircuit::get_temperature_transfer_coefficient()
 {
     double Kt{0};
     switch (get_towers_on())
@@ -81,12 +79,19 @@ double CondensedWaterCircuit::get_temperature_transfer_coefficient(double Tcd)
         break;
     }
 
-    return (30 - Tcd) / 12 * Kt * Kp;
+    return Kt * Kp;
 };
 
-void CondensedWaterCircuit::condense_water() {
+void CondensedWaterCircuit::condense_water()
+{
     double dT = water_temperature - 18;
-    water_temperature -= get_temperature_transfer_coefficient(water_temperature) * dT;
+    water_temperature -= get_temperature_transfer_coefficient() * dT;
 };
 
-void CondensedWaterCircuit::set_water_temperature( double temperature ) { water_temperature = temperature; }
+void CondensedWaterCircuit::not_condense_water(double temperature_outdoor)
+{
+    double dT = temperature_outdoor - water_temperature;
+    water_temperature += dT * 0.4;
+};
+
+void CondensedWaterCircuit::set_water_temperature(double temperature) { water_temperature = temperature; }

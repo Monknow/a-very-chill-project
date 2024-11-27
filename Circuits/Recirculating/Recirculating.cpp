@@ -9,10 +9,13 @@ const string BIBLIOTEC_NAME = "";
 
 using namespace std;
 
-RecirculatingCircuit::RecirculatingCircuit(int n_of_pumps): Circuit(n_of_pumps, "RecirculatingPump"), fcu(FCU()) {
+// Recirculating Circuit
+
+RecirculatingCircuit::RecirculatingCircuit(int n_of_pumps) : Circuit(n_of_pumps, "RecirculatingPump"), fcu(FCU())
+{
 }
 
-int RecirculatingCircuit::get_FCU_on_time(){ return fcu.get_on_time(); }
+int RecirculatingCircuit::get_FCU_on_time() { return fcu.get_on_time(); }
 
 int RecirculatingCircuit::get_total_on_time() { return fcu.get_on_time() + get_pumps_on_time(); }
 
@@ -20,16 +23,23 @@ double RecirculatingCircuit::get_temperature_transfer_coefficient() { return 0; 
 
 int RecirculatingCircuit::get_total_energy_consuption() { return fcu.get_power_consumed() + get_pumps_total_energy_consumption(); }
 
-AulasIRecirculatingCircuit::AulasIRecirculatingCircuit(): RecirculatingCircuit(2), fcu_2(FCU()), one_pump_TTCf(0.3), two_pump_TTCf(0.4) {}
+void RecirculatingCircuit::turn_on_fcu() { RecirculatingCircuit::fcu.turn_on(); }
 
-double AulasIRecirculatingCircuit::get_temperature_transfer_coefficient() {
-    if (!fcu.get_state() || !fcu_2.get_state())
+// Aulas II Recirculating Circuit
+
+AulasIRecirculatingCircuit::AulasIRecirculatingCircuit() : RecirculatingCircuit(2), fcu_2(FCU()), one_pump_TTCf(0.3), two_pump_TTCf(0.4)
+{
+}
+
+double AulasIRecirculatingCircuit::get_temperature_transfer_coefficient()
+{
+    if (!fcu.get_state() && !fcu_2.get_state())
     {
         cout << "Unable to cool, one or more of Aulas I FCU not turned on!!" << endl;
         return 0;
     }
 
-    double cooling_capacity {0};
+    double cooling_capacity{0};
 
     switch (get_pumps_on())
     {
@@ -39,7 +49,7 @@ double AulasIRecirculatingCircuit::get_temperature_transfer_coefficient() {
     case 1:
         cooling_capacity = one_pump_TTCf;
         break;
-    
+
     case 2:
         cooling_capacity = two_pump_TTCf;
         break;
@@ -52,16 +62,19 @@ double AulasIRecirculatingCircuit::get_temperature_transfer_coefficient() {
     return cooling_capacity;
 }
 
-AulasIIRecirculatingCircuit::AulasIIRecirculatingCircuit(): RecirculatingCircuit(2), one_pump_TTCf(0.25), two_pump_TTCf(0.4) {}
+// Aulas II Recirculating Circuit
 
-double AulasIIRecirculatingCircuit::get_temperature_transfer_coefficient() {
+AulasIIRecirculatingCircuit::AulasIIRecirculatingCircuit() : RecirculatingCircuit(2), one_pump_TTCf(0.25), two_pump_TTCf(0.4) {}
+
+double AulasIIRecirculatingCircuit::get_temperature_transfer_coefficient()
+{
     if (!fcu.get_state())
     {
         cout << "Unable to cool, Aulas II FCU not turned on!!" << endl;
         return 0;
     }
 
-    double cooling_capacity {0};
+    double cooling_capacity{0};
 
     switch (get_pumps_on())
     {
@@ -71,7 +84,7 @@ double AulasIIRecirculatingCircuit::get_temperature_transfer_coefficient() {
     case 1:
         cooling_capacity = one_pump_TTCf;
         break;
-    
+
     case 2:
         cooling_capacity = two_pump_TTCf;
         break;
@@ -84,17 +97,19 @@ double AulasIIRecirculatingCircuit::get_temperature_transfer_coefficient() {
     return cooling_capacity;
 }
 
+// Library Recirculating Circuit
 
-BiblioTECRecirculatingCircuit::BiblioTECRecirculatingCircuit(): RecirculatingCircuit(3), one_pump_TTCf(0.2), two_pump_TTCf(0.3), three_pump_TTCf(0.4) {}
+BiblioTECRecirculatingCircuit::BiblioTECRecirculatingCircuit() : RecirculatingCircuit(3), one_pump_TTCf(0.2), two_pump_TTCf(0.3), three_pump_TTCf(0.4) {}
 
-double BiblioTECRecirculatingCircuit::get_temperature_transfer_coefficient() {
+double BiblioTECRecirculatingCircuit::get_temperature_transfer_coefficient()
+{
     if (!fcu.get_state())
     {
         cout << "Unable to cool, BiblioTEC FCU not turned on!!" << endl;
         return 0;
     }
 
-    double cooling_capacity {0};
+    double cooling_capacity{0};
 
     switch (get_pumps_on())
     {
@@ -104,7 +119,7 @@ double BiblioTECRecirculatingCircuit::get_temperature_transfer_coefficient() {
     case 1:
         cooling_capacity = one_pump_TTCf;
         break;
-    
+
     case 2:
         cooling_capacity = two_pump_TTCf;
         break;
@@ -120,9 +135,9 @@ double BiblioTECRecirculatingCircuit::get_temperature_transfer_coefficient() {
     return cooling_capacity;
 }
 
+double BiblioTECRecirculatingCircuit::get_cooling_capacity(double RToff, double TCh)
+{
 
-double BiblioTECRecirculatingCircuit::get_cooling_capacity( double RToff, double TCh ) {
-
-    double cooling_capacity =  (RToff - TCh) * get_temperature_transfer_coefficient();
+    double cooling_capacity = (RToff - TCh) * get_temperature_transfer_coefficient();
     return cooling_capacity;
 }

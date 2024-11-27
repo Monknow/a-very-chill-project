@@ -18,7 +18,8 @@ public:
     int get_total_energy_consuption();
     int get_total_on_time();
     int get_chillers_on();
-    void chill_water();
+    void chill_water(double condense_water_temperature);
+    void not_chill_water(double temperature_outdoor);
 
     double water_temperature;
 

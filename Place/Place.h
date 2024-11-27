@@ -9,7 +9,11 @@ class Place
 {
 public:
     Place(string instance_name, double instance_temperature_indoor, double instance_ambient_room_rate, double instance_temperature_outdoor, bool instance_busy_hours[24], AulasIRecirculatingCircuit instance_aulas_i_recirculating_circuit);
-    void updateTemperature(bool state, double temperature_chilled_water, double temperature_transfer_coefficient);
+    void updateTemperature(bool state, double temperature_chilled_water, double new_temperature_outdoor);
+    double get_indoor_temperature();
+    void turn_on_fcu();
+    void turn_on_pumps(int n);
+    void turn_off_pumps(int n);
 
 private:
     int time = 0;

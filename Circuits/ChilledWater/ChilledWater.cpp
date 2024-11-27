@@ -2,8 +2,6 @@
 #include "../../Actuator/Chiller/Chiller.h"
 #include "../../Actuator/Pumps/Pumps.h"
 
-
-
 ChilledWaterCircuit::ChilledWaterCircuit() : Circuit(8, "ChillWaterPump"), water_temperature(15), chiller_1(Chiller()), chiller_2(Chiller()) {};
 
 int ChilledWaterCircuit::get_Chillers_on_time()
@@ -52,6 +50,12 @@ int ChilledWaterCircuit::get_chillers_on()
 double ChilledWaterCircuit::get_temperature_transfer_coefficient(double Tcd)
 {
     double Kc{0};
+
+    if (Tcd > 30)
+    {
+        return 0.1;
+    }
+
     switch (get_chillers_on())
     {
     case 0:
@@ -84,8 +88,14 @@ double ChilledWaterCircuit::get_temperature_transfer_coefficient(double Tcd)
     return (30 - Tcd) / 12 * Kc * Kp;
 };
 
-
-void ChilledWaterCircuit::chill_water() {
+void ChilledWaterCircuit::chill_water(double condense_water_temperature)
+{
     double dT = water_temperature - 8;
-    water_temperature -= get_temperature_transfer_coefficient(water_temperature) * dT;
+    water_temperature -= get_temperature_transfer_coefficient(condense_water_temperature) * dT;
 };
+
+void ChilledWaterCircuit::not_chill_water(double temperature_outdoor)
+{
+    double dT = temperature_outdoor - water_temperature;
+    water_temperature += 0.1 * dT;
+}

@@ -16,13 +16,12 @@ public:
     int get_FCU_on_time();
     int get_total_energy_consuption();
     int get_total_on_time();
+    void turn_on_fcu();
 };
-
-
 
 class AulasIRecirculatingCircuit : public RecirculatingCircuit
 {
-private:
+protected:
     FCU fcu_2;
     double one_pump_TTCf;
     double two_pump_TTCf;
@@ -34,7 +33,7 @@ public:
 
 class AulasIIRecirculatingCircuit : public RecirculatingCircuit
 {
-private:
+protected:
     double one_pump_TTCf;
     double two_pump_TTCf;
 
@@ -45,16 +44,15 @@ public:
 
 class BiblioTECRecirculatingCircuit : public RecirculatingCircuit
 {
-private:
+protected:
     double one_pump_TTCf;
     double two_pump_TTCf;
     double three_pump_TTCf;
 
-
 public:
     BiblioTECRecirculatingCircuit();
     double get_temperature_transfer_coefficient();
-    double get_cooling_capacity( double RToff, double TCh );
+    double get_cooling_capacity(double RToff, double TCh);
 };
 
 #endif
