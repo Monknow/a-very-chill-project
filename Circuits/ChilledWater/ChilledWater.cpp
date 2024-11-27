@@ -45,6 +45,11 @@ int ChilledWaterCircuit::get_total_energy_consuption()
 int ChilledWaterCircuit::get_chillers_on()
 {
     return chiller_1.get_state() + chiller_2.get_state();
+}
+
+int ChilledWaterCircuit::get_chillers_cycles()
+{
+    return chiller_1.get_cycles() + chiller_2.get_cycles();
 };
 
 double ChilledWaterCircuit::get_temperature_transfer_coefficient(double Tcd)

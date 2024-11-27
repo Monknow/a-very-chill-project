@@ -12,8 +12,10 @@ public:
     void updateTemperature(bool state, double temperature_chilled_water, double new_temperature_outdoor);
     double get_indoor_temperature();
     void turn_on_fcu();
+    void turn_off_fcu();
     void turn_on_pumps(int n);
     void turn_off_pumps(int n);
+    AulasIRecirculatingCircuit recirculating_circuit;
 
 private:
     int time = 0;
@@ -22,7 +24,6 @@ private:
     double temperature_outdoor;
     double temperature_indoor;
     bool busy_hours[24];
-    AulasIRecirculatingCircuit recirculating_circuit;
 };
 
 #endif

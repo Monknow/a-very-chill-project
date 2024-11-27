@@ -31,10 +31,17 @@ void Actuator::iterate() {
 
 void Actuator::turn_on() {
     Actuator::state = true;
+    Actuator::iterate();
+}
+
+int Actuator::get_cycles()
+{
+    return cycles;
 }
 
 void Actuator::turn_off() {
-    Actuator::state = true;
+    if (Actuator::state) { cycles++; }
+    Actuator::state = false;
 }
 
 double Actuator::get_power_consumption() { return power_consumption; }

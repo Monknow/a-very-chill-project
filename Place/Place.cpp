@@ -40,6 +40,10 @@ void Place::turn_on_fcu()
     recirculating_circuit.turn_on_fcu();
 }
 
+void Place::turn_off_fcu() {
+    recirculating_circuit.turn_off_fcu();
+}
+
 void Place::turn_on_pumps(int n)
 {
     recirculating_circuit.turn_on_pumps(n);

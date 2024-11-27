@@ -9,7 +9,7 @@
 class CondensedWaterCircuit : public Circuit
 {
 public:
-    CondensedWaterCircuit();
+    CondensedWaterCircuit(double water_temp);
     virtual double get_temperature_transfer_coefficient();
     int get_Towers_on_time();
     void turn_on_one_tower();
@@ -18,6 +18,7 @@ public:
     int get_total_energy_consuption();
     int get_total_on_time();
     int get_towers_on();
+    int get_towers_cycles();
     void condense_water();
     void not_condense_water(double temperature_outdoor);
     void set_water_temperature(double temperature);

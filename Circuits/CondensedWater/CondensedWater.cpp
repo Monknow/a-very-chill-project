@@ -2,7 +2,7 @@
 #include "../../Actuator/Tower/Tower.h"
 #include "../../Actuator/Pumps/Pumps.h"
 
-CondensedWaterCircuit::CondensedWaterCircuit() : Circuit(8, "TowWaterPump"), water_temperature(22), tower_1(Tower()), tower_2(Tower()) {};
+CondensedWaterCircuit::CondensedWaterCircuit(double water_temp) : Circuit(8, "CondensedWaterPump"), water_temperature(water_temp), tower_1(Tower()), tower_2(Tower()) {};
 
 int CondensedWaterCircuit::get_Towers_on_time()
 {
@@ -45,6 +45,10 @@ int CondensedWaterCircuit::get_total_energy_consuption()
 int CondensedWaterCircuit::get_towers_on()
 {
     return tower_1.get_state() + tower_2.get_state();
+}
+int CondensedWaterCircuit::get_towers_cycles()
+{
+    return tower_1.get_cycles() + tower_2.get_cycles();
 };
 
 double CondensedWaterCircuit::get_temperature_transfer_coefficient()

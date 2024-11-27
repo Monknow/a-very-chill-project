@@ -14,6 +14,7 @@ public:
     int get_on_time();
     void turn_off();
     void turn_on();
+    int get_cycles();
 
 private:
     bool state;

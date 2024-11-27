@@ -25,6 +25,16 @@ int RecirculatingCircuit::get_total_energy_consuption() { return fcu.get_power_c
 
 void RecirculatingCircuit::turn_on_fcu() { RecirculatingCircuit::fcu.turn_on(); }
 
+void RecirculatingCircuit::turn_off_fcu()
+{
+    RecirculatingCircuit::fcu.turn_off();
+}
+
+int RecirculatingCircuit::get_FCUs_cycles()
+{
+    return 0;
+}
+
 // Aulas II Recirculating Circuit
 
 AulasIRecirculatingCircuit::AulasIRecirculatingCircuit() : RecirculatingCircuit(2), fcu_2(FCU()), one_pump_TTCf(0.3), two_pump_TTCf(0.4)
@@ -62,6 +72,21 @@ double AulasIRecirculatingCircuit::get_temperature_transfer_coefficient()
     return cooling_capacity;
 }
 
+int AulasIRecirculatingCircuit::get_FCUs_cycles()
+{
+    return fcu.get_cycles() + fcu_2.get_cycles();
+}
+
+void AulasIRecirculatingCircuit::turn_on_both_FCUs()
+{
+    fcu.turn_on(), fcu_2.turn_on();
+}
+
+void AulasIRecirculatingCircuit::turn_off_both_FCUs()
+{
+    fcu.turn_off(), fcu_2.turn_off();
+}
+
 // Aulas II Recirculating Circuit
 
 AulasIIRecirculatingCircuit::AulasIIRecirculatingCircuit() : RecirculatingCircuit(2), one_pump_TTCf(0.25), two_pump_TTCf(0.4) {}
@@ -95,6 +120,11 @@ double AulasIIRecirculatingCircuit::get_temperature_transfer_coefficient()
     }
 
     return cooling_capacity;
+}
+
+int AulasIIRecirculatingCircuit::get_FCUs_cycles()
+{
+    return fcu.get_cycles();
 }
 
 // Library Recirculating Circuit
@@ -140,4 +170,9 @@ double BiblioTECRecirculatingCircuit::get_cooling_capacity(double RToff, double 
 
     double cooling_capacity = (RToff - TCh) * get_temperature_transfer_coefficient();
     return cooling_capacity;
+}
+
+int BiblioTECRecirculatingCircuit::get_FCUs_cycles()
+{
+    return fcu.get_cycles();
 }

@@ -100,6 +100,15 @@ int Circuit::get_pumps_on_time() {
     return time_counter;
 }
 
+int Circuit::get_pumps_cycles() {
+    int counter {0};
+    for (int i = 0; i < n_of_pumps; i++){
+        counter += pumps[i].get_cycles();
+    }
+
+    return counter;
+}
+
 double Circuit::get_pumps_total_energy_consumption() { return get_pumps_on_time() * pumps[0].get_power_consumption(); }
 
 int Circuit::get_total_on_time(){return 0;}

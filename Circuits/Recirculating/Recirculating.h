@@ -17,6 +17,8 @@ public:
     int get_total_energy_consuption();
     int get_total_on_time();
     void turn_on_fcu();
+    void turn_off_fcu();
+    virtual int get_FCUs_cycles();
 };
 
 class AulasIRecirculatingCircuit : public RecirculatingCircuit
@@ -29,6 +31,9 @@ protected:
 public:
     AulasIRecirculatingCircuit();
     double get_temperature_transfer_coefficient();
+    int get_FCUs_cycles();
+    void turn_on_both_FCUs();
+    void turn_off_both_FCUs();
 };
 
 class AulasIIRecirculatingCircuit : public RecirculatingCircuit
@@ -40,6 +45,7 @@ protected:
 public:
     AulasIIRecirculatingCircuit();
     double get_temperature_transfer_coefficient();
+    int get_FCUs_cycles();
 };
 
 class BiblioTECRecirculatingCircuit : public RecirculatingCircuit
@@ -53,6 +59,7 @@ public:
     BiblioTECRecirculatingCircuit();
     double get_temperature_transfer_coefficient();
     double get_cooling_capacity(double RToff, double TCh);
+    int get_FCUs_cycles();
 };
 
 #endif

@@ -22,6 +22,7 @@ public:
     double get_pumps_total_energy_consumption();
     virtual int get_total_on_time();
     virtual int get_total_energy_consuption();
+    int get_pumps_cycles();
 };
 
 
