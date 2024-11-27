@@ -85,6 +85,7 @@ double ChilledWaterCircuit::get_temperature_transfer_coefficient(double Tcd)
 };
 
 
-void ChilledWaterCircuit::chill_water(double dT) {
+void ChilledWaterCircuit::chill_water() {
+    double dT = water_temperature - 8;
     water_temperature -= get_temperature_transfer_coefficient(water_temperature) * dT;
 };

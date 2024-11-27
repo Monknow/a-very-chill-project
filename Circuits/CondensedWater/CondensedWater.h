@@ -18,7 +18,8 @@ public:
     int get_total_energy_consuption();
     int get_total_on_time();
     int get_towers_on();
-    void condense_water(double dT);
+    void condense_water();
+    void set_water_temperature(double temperature);
 
     double water_temperature;
 

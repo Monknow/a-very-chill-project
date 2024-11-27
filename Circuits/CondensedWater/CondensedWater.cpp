@@ -84,6 +84,9 @@ double CondensedWaterCircuit::get_temperature_transfer_coefficient(double Tcd)
     return (30 - Tcd) / 12 * Kt * Kp;
 };
 
-void CondensedWaterCircuit::condense_water(double dT) {
+void CondensedWaterCircuit::condense_water() {
+    double dT = water_temperature - 18;
     water_temperature -= get_temperature_transfer_coefficient(water_temperature) * dT;
 };
+
+void CondensedWaterCircuit::set_water_temperature( double temperature ) { water_temperature = temperature; }
