@@ -38,7 +38,7 @@ double day_temperature[24] = {
 int main()
 {
 
-    double initial_temperature_indoor = 16;
+    double initial_temperature_indoor = 25;
     double temperature_outdoor = day_temperature[0];
     double total_energy_used = 0;
 
@@ -67,16 +67,16 @@ int main()
 
         chilledWaterCircuit.update_temperature(temperature_outdoor);
 
-        // Update Buildings
+        // Update And Display Buildings
+
+        cout << hour << ":00hr" << endl;
 
         for (int building = 0; building < 3; building++)
         {
             buildings[building].update_temperature(chilledWaterCircuit.water_temperature, temperature_outdoor, hour);
+            buildings[building].update_comfort(hour);
+            buildings[building].display_status();
         }
-
-        aulasI.recirculating_circuit.display_status();
-        aulasII.recirculating_circuit.display_status();
-        library.recirculating_circuit.display_status();
 
         chilledWaterCircuit.display_status();
         condensedWaterCircuit.display_status();
@@ -84,9 +84,5 @@ int main()
 
     // Print Final Values
 
-    for (int building = 0; building < 3; building++)
-    {
-        cout << buildings[building].get_name() << " Temperature is " << buildings[building].get_indoor_temperature() << " C" << endl;
-    }
     return 0;
 }

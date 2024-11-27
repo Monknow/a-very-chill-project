@@ -27,6 +27,6 @@ bool busy_hours_library[24] = {
     false, // 23:00
 };
 
-BiblioTECRecirculatingCircuit libraryRecirculatingCircuit{};
+BiblioTECRecirculatingCircuit libraryRecirculatingCircuit;
 
-Library::Library(double instance_temperature_indoor, double instance_temperature_outdoor) : Place("Library", instance_temperature_indoor, instance_temperature_outdoor, 0.9, busy_hours_library, libraryRecirculatingCircuit) {}
+Library::Library(double instance_temperature_indoor, double instance_temperature_outdoor) : Place("Library", instance_temperature_indoor, instance_temperature_outdoor, 0.9, busy_hours_library, &libraryRecirculatingCircuit) {}

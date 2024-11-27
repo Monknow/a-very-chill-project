@@ -4,29 +4,37 @@
 #include "../Circuits.h"
 #include "../../Actuator/FCU/FCU.h"
 #include <string>
+#include <optional>
 
 class RecirculatingCircuit : public Circuit
 {
+private:
+    string name;
+    int n_of_fcu;
+
 protected:
     FCU fcu;
+    std::optional<FCU> fcu_2;
 
 public:
     RecirculatingCircuit();
-    RecirculatingCircuit(int n_of_pumps);
-    virtual double get_temperature_transfer_coefficient();
+    RecirculatingCircuit(int n_of_pumps, int n_of_fcu, string instance_name);
+
     int get_FCU_on_time();
     int get_total_energy_consuption();
     int get_total_on_time();
     void turn_on_fcu();
     void turn_off_fcu();
+    void display_status();
     virtual void turn_on_both_FCUs();
     virtual void turn_off_both_FCUs();
     virtual int get_FCUs_cycles();
-    void display_status();
+    virtual double get_temperature_transfer_coefficient();
 };
 
 class AulasIRecirculatingCircuit : public RecirculatingCircuit
 {
+
 protected:
     FCU fcu_2;
     double one_pump_TTCf;
@@ -34,12 +42,12 @@ protected:
 
 public:
     AulasIRecirculatingCircuit();
-    double get_temperature_transfer_coefficient();
-    int get_FCUs_cycles();
-    void turn_on_both_FCUs();
-    void turn_off_both_FCUs();
     void iterate();
     void display_status();
+    int get_FCUs_cycles();
+    void turn_off_both_FCUs();
+    void turn_on_both_FCUs();
+    double get_temperature_transfer_coefficient();
 };
 
 class AulasIIRecirculatingCircuit : public RecirculatingCircuit

@@ -27,6 +27,6 @@ bool busy_hours_aulas_i[24] = {
     false, // 23:00
 };
 
-AulasIRecirculatingCircuit aulasIRecirculatingCircuit{};
+AulasIRecirculatingCircuit aulasIRecirculatingCircuit;
 
-AulasI::AulasI(string name, double instance_temperature_indoor, double instance_temperature_outdoor) : Place(name, instance_temperature_indoor, instance_temperature_outdoor, 0.7, busy_hours_aulas_i, aulasIRecirculatingCircuit) {}
+AulasI::AulasI(string name, double instance_temperature_indoor, double instance_temperature_outdoor) : Place(name, instance_temperature_indoor, instance_temperature_outdoor, 0.7, busy_hours_aulas_i, &aulasIRecirculatingCircuit) {}

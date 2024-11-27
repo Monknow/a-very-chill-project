@@ -3,10 +3,6 @@
 #include <string>
 #include <iostream>
 
-const string AULAS_I_NAME = "Aulas I";
-const string AULAS_II_NAME = "";
-const string BIBLIOTEC_NAME = "";
-
 using namespace std;
 
 // Recirculating Circuit
@@ -15,8 +11,10 @@ RecirculatingCircuit::RecirculatingCircuit() : Circuit(2, "RecirculatingPump"), 
 {
 }
 
-RecirculatingCircuit::RecirculatingCircuit(int n_of_pumps) : Circuit(n_of_pumps, "RecirculatingPump"), fcu(FCU())
+RecirculatingCircuit::RecirculatingCircuit(int n_of_pumps, int instance_n_of_fcu, string instance_name) : Circuit(n_of_pumps, "RecirculatingPump"), fcu(FCU())
 {
+    n_of_fcu = instance_n_of_fcu;
+    name = instance_name;
 }
 
 int RecirculatingCircuit::get_FCU_on_time() { return fcu.get_on_time(); }
@@ -41,7 +39,18 @@ int RecirculatingCircuit::get_FCUs_cycles()
 
 void RecirculatingCircuit::display_status()
 {
-    cout << " (From virtual display_status at Recirculating.cpp) WARNING: INCORRECT IMPLEMENTATION. THIS CODE SHOULD NOT BE REACHED!!" << endl;
+    cout << "##### " << name << " RECIRCULATING CIRCUIT #####\n\n";
+    cout << "   _____________ FCUs STATUS _____________\n\n";
+    cout << "       # FCU I " << " Status: " << (fcu.get_state() ? "ON" : "OFF") << " Cycles: " << fcu.get_cycles() << endl;
+
+    // Check for second FCU (Used in Aulas II)
+
+    if (n_of_fcu == 2)
+    {
+        cout << "       # FCU II " << " Status: " << (fcu_2->get_state() ? "ON" : "OFF") << " Cycles: " << fcu_2->get_cycles() << endl;
+    }
+
+    display_pumps_status();
 }
 
 void RecirculatingCircuit::turn_on_both_FCUs()
@@ -56,7 +65,7 @@ void RecirculatingCircuit::turn_off_both_FCUs()
 
 // Aulas II Recirculating Circuit
 
-AulasIRecirculatingCircuit::AulasIRecirculatingCircuit() : RecirculatingCircuit(2), fcu_2(FCU()), one_pump_TTCf(0.3), two_pump_TTCf(0.4)
+AulasIRecirculatingCircuit::AulasIRecirculatingCircuit() : RecirculatingCircuit(2, 2, "Aulas I"), fcu_2(FCU()), one_pump_TTCf(0.3), two_pump_TTCf(0.4)
 {
 }
 
@@ -117,14 +126,15 @@ void AulasIRecirculatingCircuit::display_status()
 {
     cout << "##### AULAS I RECIRCULATING CIRCUIT #####\n\n";
     cout << "   _____________ FCUs STATUS _____________\n\n";
-    cout << "       # FCU I " << " Status: " <<  (fcu.get_state() ? "ON":"OFF") << " Cycles: " << fcu.get_cycles() << endl;
-    cout << "       # FCU II " << " Status: " <<  (fcu_2.get_state() ? "ON":"OFF") << " Cycles: " << fcu_2.get_cycles() << endl << endl;
+    cout << "       # FCU I " << " Status: " << (fcu.get_state() ? "ON" : "OFF") << " Cycles: " << fcu.get_cycles() << endl;
+    cout << "       # FCU II " << " Status: " << (fcu_2.get_state() ? "ON" : "OFF") << " Cycles: " << fcu_2.get_cycles() << endl
+         << endl;
     display_pumps_status();
 }
 
 // Aulas II Recirculating Circuit
 
-AulasIIRecirculatingCircuit::AulasIIRecirculatingCircuit() : RecirculatingCircuit(2), one_pump_TTCf(0.25), two_pump_TTCf(0.4) {}
+AulasIIRecirculatingCircuit::AulasIIRecirculatingCircuit() : RecirculatingCircuit(2, 1, "Aulas II"), one_pump_TTCf(0.25), two_pump_TTCf(0.4) {}
 
 double AulasIIRecirculatingCircuit::get_temperature_transfer_coefficient()
 {
@@ -172,13 +182,14 @@ void AulasIIRecirculatingCircuit::display_status()
 {
     cout << "##### AULAS II RECIRCULATING CIRCUIT #####\n\n";
     cout << "   _____________ FCU STATUS _____________\n\n";
-    cout << "       # FCU I " << " Status " <<  (fcu.get_state() ? "ON":"OFF") << " Cycles: " << fcu.get_cycles() << endl << endl;
+    cout << "       # FCU I " << " Status " << (fcu.get_state() ? "ON" : "OFF") << " Cycles: " << fcu.get_cycles() << endl
+         << endl;
     display_pumps_status();
 }
 
 // Library Recirculating Circuit
 
-BiblioTECRecirculatingCircuit::BiblioTECRecirculatingCircuit() : RecirculatingCircuit(3), one_pump_TTCf(0.2), two_pump_TTCf(0.3), three_pump_TTCf(0.4) {}
+BiblioTECRecirculatingCircuit::BiblioTECRecirculatingCircuit() : RecirculatingCircuit(3, 1, "Library"), one_pump_TTCf(0.2), two_pump_TTCf(0.3), three_pump_TTCf(0.4) {}
 
 double BiblioTECRecirculatingCircuit::get_temperature_transfer_coefficient()
 {
@@ -236,6 +247,7 @@ void BiblioTECRecirculatingCircuit::display_status()
 {
     cout << "##### BiblioTEC RECIRCULATING CIRCUIT #####\n\n";
     cout << "   _____________ FCU STATUS _____________\n\n";
-    cout << "       # FCU I " << " Status " <<  (fcu.get_state() ? "ON":"OFF") << " Cycles: " << fcu.get_cycles() << endl << endl;
+    cout << "       # FCU I " << " Status " << (fcu.get_state() ? "ON" : "OFF") << " Cycles: " << fcu.get_cycles() << endl
+         << endl;
     display_pumps_status();
 }
