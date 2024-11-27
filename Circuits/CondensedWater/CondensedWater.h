@@ -5,6 +5,9 @@
 #include "../../Actuator/Tower/Tower.h"
 #include "../../Actuator/Pumps/Pumps.h"
 #include <string>
+#include <iostream>
+
+using namespace std;
 
 class CondensedWaterCircuit : public Circuit
 {
@@ -19,9 +22,10 @@ public:
     int get_total_on_time();
     int get_towers_on();
     int get_towers_cycles();
+    void set_water_temperature(double temperature);
     void condense_water();
     void not_condense_water(double temperature_outdoor);
-    void set_water_temperature(double temperature);
+    void update_temperature(double temperature_outdoor);
 
     double water_temperature;
 

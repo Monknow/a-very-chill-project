@@ -99,3 +99,23 @@ void CondensedWaterCircuit::not_condense_water(double temperature_outdoor)
 };
 
 void CondensedWaterCircuit::set_water_temperature(double temperature) { water_temperature = temperature; }
+
+void CondensedWaterCircuit::update_temperature(double temperature_outdoor)
+{
+    if (water_temperature > 20)
+    {
+        turn_on_pumps(2);
+
+        turn_on_one_tower();
+
+        condense_water();
+        turn_off_both_towers();
+        turn_off_pumps(2);
+    }
+    else
+    {
+        not_condense_water(temperature_outdoor);
+    }
+
+    cout << "Condensed Water has used " << get_total_energy_consuption() << " Kw " << endl;
+}

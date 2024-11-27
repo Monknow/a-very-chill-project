@@ -1,4 +1,7 @@
-#include "./Place/Classroom/Classroom.h"
+#include "./Place/Place.h"
+#include "./Place/AulasI/AulasI.h"
+#include "./Place/AulasII/AulasII.h"
+#include "./Place/Library/Library.h"
 #include "./Circuits/ChilledWater/ChilledWater.h"
 #include "./Circuits/CondensedWater/CondensedWater.h"
 #include <iostream>
@@ -32,184 +35,51 @@ double day_temperature[24] = {
     16, // 23:00
 };
 
-bool busy_hours_library[24] = {
-    false, // 00:00
-    false, // 01:00
-    false, // 02:00
-    false, // 03:00
-    false, // 04:00
-    false, // 05:00
-    false, // 06:00
-    true,  // 07:00
-    true,  // 08:00
-    true,  // 09:00
-    true,  // 10:00
-    true,  // 11:00
-    true,  // 12:00
-    false, // 13:00
-    false, // 14:00
-    true,  // 15:00
-    true,  // 16:00
-    true,  // 17:00
-    true,  // 18:00
-    true,  // 19:00
-    true,  // 20:00
-    false, // 21:00
-    false, // 22:00
-    false, // 23:00
-};
-
-bool busy_hours_aulas_i[24] = {
-    false, // 00:00
-    false, // 01:00
-    false, // 02:00
-    false, // 03:00
-    false, // 04:00
-    false, // 05:00
-    false, // 06:00
-    false, // 07:00
-    false, // 08:00
-    false, // 09:00
-    true,  // 10:00
-    true,  // 11:00
-    true,  // 12:00
-    true,  // 13:00
-    true,  // 14:00
-    true,  // 15:00
-    true,  // 16:00
-    true,  // 17:00
-    true,  // 18:00
-    true,  // 19:00
-    false, // 20:00
-    false, // 21:00
-    false, // 22:00
-    false, // 23:00
-};
-
-bool busy_hours_aulas_ii[24] = {
-    false, // 00:00
-    false, // 01:00
-    false, // 02:00
-    false, // 03:00
-    false, // 04:00
-    false, // 05:00
-    false, // 06:00
-    true,  // 07:00
-    true,  // 08:00
-    true,  // 09:00
-    true,  // 10:00
-    true,  // 11:00
-    true,  // 12:00
-    true,  // 13:00
-    true,  // 14:00
-    true,  // 15:00
-    true,  // 16:00
-    true,  // 17:00
-    true,  // 18:00
-    true,  // 19:00
-    true,  // 20:00
-    true,  // 21:00
-    false, // 22:00
-    false, // 23:00
-};
-
 int main()
 {
 
-    double initial_temperature_indoor = 20;
+    double initial_temperature_indoor = 16;
     double temperature_outdoor = day_temperature[0];
     double total_energy_used = 0;
 
     ChilledWaterCircuit chilledWaterCircuit{};
     CondensedWaterCircuit condensedWaterCircuit{chilledWaterCircuit.water_temperature};
 
-    AulasIRecirculatingCircuit aulasIRecirculatingCircuit{};
-    Classroom aulasI("Aulas I", initial_temperature_indoor, temperature_outdoor, busy_hours_aulas_ii, aulasIRecirculatingCircuit);
+    AulasI aulasI("Aulas I", initial_temperature_indoor, temperature_outdoor);
+    AulasII aulasII("Aulas II", initial_temperature_indoor, temperature_outdoor);
+    Library library(initial_temperature_indoor, temperature_outdoor);
 
-    cout << "0" << endl;
-
-    cout << "Aulas I" << " is " << aulasI.get_indoor_temperature() << "C" << endl;
-    cout << "Chilled Water" << " is " << chilledWaterCircuit.water_temperature << "C" << endl;
-    cout << "Condensed Water" << " is " << condensedWaterCircuit.water_temperature << "C" << endl;
-
+    Place buildings[3] = {
+        aulasI,
+        aulasII,
+        library,
+    };
 
     for (int hour = 1; hour < 24; hour++)
     {
         temperature_outdoor = day_temperature[hour];
 
-        if (busy_hours_aulas_i[hour] && aulasI.get_indoor_temperature() > 20)
+        // Update Condensed Water
+
+        condensedWaterCircuit.update_temperature(temperature_outdoor);
+
+        // Update Chilled Water
+
+        chilledWaterCircuit.update_temperature(temperature_outdoor);
+
+        // Update Buildings
+
+        for (int building = 0; building < 3; building++)
         {
-            aulasI.recirculating_circuit.turn_on_both_FCUs();
-            aulasI.turn_on_pumps(1);
-            aulasI.updateTemperature(true, chilledWaterCircuit.water_temperature, temperature_outdoor);
-            aulasI.recirculating_circuit.turn_off_both_FCUs();
-            aulasI.turn_off_pumps(1);
+            buildings[building].update_temperature(chilledWaterCircuit.water_temperature, temperature_outdoor, hour);
         }
-        else
-        {
-            aulasI.updateTemperature(false, chilledWaterCircuit.water_temperature, temperature_outdoor);
-        }
-
-        if (condensedWaterCircuit.water_temperature > 20)
-        {
-            condensedWaterCircuit.turn_on_pumps(2);
-            condensedWaterCircuit.turn_on_one_tower();
-            condensedWaterCircuit.condense_water();
-            condensedWaterCircuit.turn_off_both_towers();
-            condensedWaterCircuit.turn_off_pumps(2);
-        }
-        else
-        {
-
-            condensedWaterCircuit.not_condense_water(temperature_outdoor);
-        }
-
-        if (chilledWaterCircuit.water_temperature > 15)
-        {
-            chilledWaterCircuit.turn_on_pumps(2);
-            chilledWaterCircuit.turn_on_one_chiller();
-            chilledWaterCircuit.chill_water(temperature_outdoor);
-            chilledWaterCircuit.turn_off_both_chillers();
-            chilledWaterCircuit.turn_off_pumps(2);
-        }
-        else
-        {
-            chilledWaterCircuit.not_chill_water(temperature_outdoor);
-        }
-
-        cout << "TIME:  " << hour << " HOUR" << endl;
-
-        cout << "Aulas I" << " is " << aulasI.get_indoor_temperature() << "C" << endl;
-        cout << "Chilled Water" << " is " << chilledWaterCircuit.water_temperature << "C" << endl;
-        cout << "Condensed Water" << " is " << condensedWaterCircuit.water_temperature << "C" << endl;
-        cout << endl << "################## Statistics ##################" << endl;
-        cout << "___________________Energy consumed per circuit___________________" << endl;
-        cout << "Chilled Water Circuit.............        " << chilledWaterCircuit.get_total_energy_consuption() << endl << endl;
-        cout << "Condensed Water Circuit...........        " << condensedWaterCircuit.get_total_energy_consuption() << endl << endl;
-        cout << "AULAS I Recirculating Circuit.....        " << aulasI.recirculating_circuit.get_total_energy_consuption() << endl << endl;
-
-        cout << endl << "___________________Cycles per circuit___________________" << endl;
-        cout << "Chilled Water Circuit (Pumps).......................        " << chilledWaterCircuit.get_pumps_cycles() << endl;
-        cout << "       Chilled Water Circuit (Chillers).............        " << chilledWaterCircuit.get_chillers_cycles() << endl << endl;
-        
-        cout << "Condensed Water Circuit (Pumps).....................        " << condensedWaterCircuit.get_pumps_cycles() << endl;
-        cout << "       Condensed Water Circuit (Towers).............        " << condensedWaterCircuit.get_towers_cycles() << endl << endl;
-
-        cout << "AULAS I Recirculating Circuit (Pumps)...............        " << aulasI.recirculating_circuit.get_pumps_cycles() << endl;
-        cout << "       AULAS I Recirculating Circuit (FCUs).........        " << aulasI.recirculating_circuit.get_FCUs_cycles() << endl;
-
     }
-    cout << endl << endl << "################# TOTALS###################" << endl;
-    cout << "Chilled Water Circuit (Energy) ...........................            " << chilledWaterCircuit.get_total_energy_consuption() << endl;
-    cout << "Condensed Water Circuit (Energy) .........................            " << condensedWaterCircuit.get_total_energy_consuption() << endl;
-    cout << "AULAS I Recirculating Circuit (Energy) ...................            " << aulasI.recirculating_circuit.get_total_energy_consuption() << endl << endl;
 
-    cout << "Chilled Water Circuit (Cycles) ...........................            " << chilledWaterCircuit.get_chillers_cycles() + chilledWaterCircuit.get_pumps_cycles() << endl;
-    cout << "Condensed Water Circuit (Cycles) .........................            " << condensedWaterCircuit.get_towers_cycles() + condensedWaterCircuit.get_pumps_cycles() << endl;
-    cout << "AULAS I Recirculating Circuit (Cycles) ...................            " << aulasI.recirculating_circuit.get_FCUs_cycles() + aulasI.recirculating_circuit.get_pumps_cycles() << endl << endl;
+    // Print Final Values
 
-
-
-
+    for (int building = 0; building < 3; building++)
+    {
+        cout << buildings[building].get_name() << " Temperature is " << buildings[building].get_indoor_temperature() << " C" << endl;
+    }
     return 0;
 }

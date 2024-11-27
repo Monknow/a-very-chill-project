@@ -93,14 +93,30 @@ double ChilledWaterCircuit::get_temperature_transfer_coefficient(double Tcd)
     return (30 - Tcd) / 12 * Kc * Kp;
 };
 
-void ChilledWaterCircuit::chill_water(double condense_water_temperature)
+void ChilledWaterCircuit::chill_water(double condensed_water_temperature)
 {
     double dT = water_temperature - 8;
-    water_temperature -= get_temperature_transfer_coefficient(condense_water_temperature) * dT;
+    water_temperature -= get_temperature_transfer_coefficient(condensed_water_temperature) * dT;
 };
 
 void ChilledWaterCircuit::not_chill_water(double temperature_outdoor)
 {
     double dT = temperature_outdoor - water_temperature;
     water_temperature += 0.1 * dT;
+}
+
+void ChilledWaterCircuit::update_temperature(double temperature_outdoor)
+{
+    if (water_temperature > 15)
+    {
+        turn_on_pumps(2);
+        turn_on_one_chiller();
+        chill_water(temperature_outdoor);
+        turn_off_both_chillers();
+        turn_off_pumps(2);
+    }
+    else
+    {
+        not_chill_water(temperature_outdoor);
+    }
 }
