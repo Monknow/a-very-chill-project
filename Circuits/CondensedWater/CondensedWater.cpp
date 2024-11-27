@@ -99,3 +99,10 @@ void CondensedWaterCircuit::not_condense_water(double temperature_outdoor)
 };
 
 void CondensedWaterCircuit::set_water_temperature(double temperature) { water_temperature = temperature; }
+
+void CondensedWaterCircuit::iterate()
+{
+    iterate_pumps();
+    tower_1.iterate();
+    tower_2.iterate();
+}

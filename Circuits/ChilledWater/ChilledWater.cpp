@@ -104,3 +104,10 @@ void ChilledWaterCircuit::not_chill_water(double temperature_outdoor)
     double dT = temperature_outdoor - water_temperature;
     water_temperature += 0.1 * dT;
 }
+
+void ChilledWaterCircuit::iterate()
+{
+    iterate_pumps();
+    chiller_1.iterate();
+    chiller_2.iterate();
+}

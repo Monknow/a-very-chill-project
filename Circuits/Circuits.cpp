@@ -109,6 +109,18 @@ int Circuit::get_pumps_cycles() {
     return counter;
 }
 
+void Circuit::iterate_pumps()
+{;
+    for (int i = 0; i < n_of_pumps; i++){
+        pumps[i].iterate();
+    }
+}
+
+void Circuit::iterate()
+{
+    return;
+}
+
 double Circuit::get_pumps_total_energy_consumption() { return get_pumps_on_time() * pumps[0].get_power_consumption(); }
 
 int Circuit::get_total_on_time(){return 0;}

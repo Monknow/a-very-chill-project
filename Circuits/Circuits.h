@@ -23,6 +23,8 @@ public:
     virtual int get_total_on_time();
     virtual int get_total_energy_consuption();
     int get_pumps_cycles();
+    void iterate_pumps();
+    virtual void iterate();
 };
 
 

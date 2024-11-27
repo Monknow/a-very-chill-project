@@ -34,6 +34,7 @@ public:
     int get_FCUs_cycles();
     void turn_on_both_FCUs();
     void turn_off_both_FCUs();
+    void iterate();
 };
 
 class AulasIIRecirculatingCircuit : public RecirculatingCircuit
@@ -46,6 +47,7 @@ public:
     AulasIIRecirculatingCircuit();
     double get_temperature_transfer_coefficient();
     int get_FCUs_cycles();
+    void iterate();
 };
 
 class BiblioTECRecirculatingCircuit : public RecirculatingCircuit
@@ -60,6 +62,7 @@ public:
     double get_temperature_transfer_coefficient();
     double get_cooling_capacity(double RToff, double TCh);
     int get_FCUs_cycles();
+    void iterate();
 };
 
 #endif

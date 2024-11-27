@@ -22,6 +22,7 @@ public:
     void condense_water();
     void not_condense_water(double temperature_outdoor);
     void set_water_temperature(double temperature);
+    void iterate();
 
     double water_temperature;
 
