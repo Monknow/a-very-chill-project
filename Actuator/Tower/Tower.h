@@ -5,9 +5,7 @@
 class Tower : public Actuator
 {
     public:
-        Tower(){
-            Actuator(10);
-        };
+        Tower();
 };
 
 #endif

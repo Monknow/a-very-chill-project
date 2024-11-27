@@ -2,7 +2,5 @@
 class FCU : public Actuator
 {
     public:
-        FCU(){
-            Actuator(10);
-        };
+        FCU();
 };
