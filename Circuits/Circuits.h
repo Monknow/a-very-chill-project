@@ -25,6 +25,7 @@ public:
     int get_pumps_cycles();
     void iterate_pumps();
     virtual void iterate();
+    void display_pumps_status();
 };
 
 

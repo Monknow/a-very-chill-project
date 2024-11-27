@@ -121,6 +121,15 @@ void Circuit::iterate()
     return;
 }
 
+void Circuit::display_pumps_status()
+{
+    cout << "_____________ PUMP STATUS _____________\n\n";
+    for (int i = 0; i < n_of_pumps; i++){
+        cout << "   # PUMP " << i << ": Status " <<  (pumps[i].get_state() ? "ON":"OFF") << " Cycles: " << pumps[i].get_cycles() << endl;
+    }
+    cout << "\n\n\n";
+}
+
 double Circuit::get_pumps_total_energy_consumption() { return get_pumps_on_time() * pumps[0].get_power_consumption(); }
 
 int Circuit::get_total_on_time(){return 0;}

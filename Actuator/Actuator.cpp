@@ -31,7 +31,6 @@ void Actuator::iterate() {
 
 void Actuator::turn_on() {
     Actuator::state = true;
-    Actuator::iterate();
 }
 
 int Actuator::get_cycles()

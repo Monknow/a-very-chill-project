@@ -11,6 +11,7 @@ protected:
     FCU fcu;
 
 public:
+    RecirculatingCircuit();
     RecirculatingCircuit(int n_of_pumps);
     virtual double get_temperature_transfer_coefficient();
     int get_FCU_on_time();
@@ -18,7 +19,10 @@ public:
     int get_total_on_time();
     void turn_on_fcu();
     void turn_off_fcu();
+    virtual void turn_on_both_FCUs();
+    virtual void turn_off_both_FCUs();
     virtual int get_FCUs_cycles();
+    void display_status();
 };
 
 class AulasIRecirculatingCircuit : public RecirculatingCircuit
@@ -35,6 +39,7 @@ public:
     void turn_on_both_FCUs();
     void turn_off_both_FCUs();
     void iterate();
+    void display_status();
 };
 
 class AulasIIRecirculatingCircuit : public RecirculatingCircuit
@@ -48,6 +53,7 @@ public:
     double get_temperature_transfer_coefficient();
     int get_FCUs_cycles();
     void iterate();
+    void display_status();
 };
 
 class BiblioTECRecirculatingCircuit : public RecirculatingCircuit
@@ -63,6 +69,7 @@ public:
     double get_cooling_capacity(double RToff, double TCh);
     int get_FCUs_cycles();
     void iterate();
+    void display_status();
 };
 
 #endif

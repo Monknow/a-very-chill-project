@@ -8,14 +8,17 @@ using namespace std;
 class Place
 {
 public:
-    Place(string instance_name, double instance_temperature_indoor, double instance_ambient_room_rate, double instance_temperature_outdoor, bool instance_busy_hours[24], AulasIRecirculatingCircuit instance_aulas_i_recirculating_circuit);
-    void updateTemperature(bool state, double temperature_chilled_water, double new_temperature_outdoor);
+    Place();
+    Place(string instance_name, double instance_temperature_indoor, double instance_ambient_room_rate, double instance_temperature_outdoor, bool instance_busy_hours[24], RecirculatingCircuit instance_recirculating_circuit);
+    void update_temperature(double temperature_chilled_water, double new_temperature_outdoor, int hour);
     double get_indoor_temperature();
     void turn_on_fcu();
     void turn_off_fcu();
     void turn_on_pumps(int n);
     void turn_off_pumps(int n);
-    AulasIRecirculatingCircuit recirculating_circuit;
+    bool is_busy(int hour);
+    string get_name();
+    RecirculatingCircuit recirculating_circuit;
 
 private:
     int time = 0;

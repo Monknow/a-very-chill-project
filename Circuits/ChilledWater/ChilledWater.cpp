@@ -1,6 +1,7 @@
 #include "ChilledWater.h"
 #include "../../Actuator/Chiller/Chiller.h"
 #include "../../Actuator/Pumps/Pumps.h"
+#include <iostream>
 
 ChilledWaterCircuit::ChilledWaterCircuit() : Circuit(8, "ChillWaterPump"), water_temperature(15), chiller_1(Chiller()), chiller_2(Chiller()) {};
 
@@ -36,8 +37,8 @@ int ChilledWaterCircuit::get_total_on_time()
 
 int ChilledWaterCircuit::get_total_energy_consuption()
 {
-    double total_chiller_1_consumption = chiller_1.get_power_consumption();
-    double total_chiller_2_consumption = chiller_2.get_power_consumption();
+    double total_chiller_1_consumption = chiller_1.get_power_consumed();
+    double total_chiller_2_consumption = chiller_2.get_power_consumed();
 
     return total_chiller_1_consumption + total_chiller_2_consumption + get_pumps_total_energy_consumption();
 }
@@ -93,10 +94,13 @@ double ChilledWaterCircuit::get_temperature_transfer_coefficient(double Tcd)
     return (30 - Tcd) / 12 * Kc * Kp;
 };
 
-void ChilledWaterCircuit::chill_water(double condense_water_temperature)
+void ChilledWaterCircuit::chill_water(double condensed_water_temperature)
 {
+    cout << "WATER CHILLED..." << endl;
+
     double dT = water_temperature - 8;
-    water_temperature -= get_temperature_transfer_coefficient(condense_water_temperature) * dT;
+    water_temperature -= get_temperature_transfer_coefficient(condensed_water_temperature) * dT;
+    iterate();
 };
 
 void ChilledWaterCircuit::not_chill_water(double temperature_outdoor)
@@ -110,4 +114,33 @@ void ChilledWaterCircuit::iterate()
     iterate_pumps();
     chiller_1.iterate();
     chiller_2.iterate();
+}
+void ChilledWaterCircuit::update_temperature(double temperature_outdoor)
+{
+    if (water_temperature > 15)
+    {
+        turn_on_pumps(2);
+        turn_on_one_chiller();
+        chill_water(temperature_outdoor);
+        turn_off_both_chillers();
+        turn_off_pumps(2);
+    }
+    else
+    {
+        not_chill_water(temperature_outdoor);
+    }
+
+    cout << "Chilled Water    has used    " << get_total_energy_consuption() << " Kw " << endl;
+
+}
+
+void ChilledWaterCircuit::display_status()
+{
+
+    cout << endl << "############# CHILLED WATER CIRCUIT #############" << endl;
+    cout << "   WATER TEMPERATURE:      " << water_temperature << endl;
+    cout << "_____________ CHILLERS STATUS _____________\n\n";
+    cout << "   # CHILLER I " << " Status " <<  (chiller_1.get_state() ? "ON":"OFF") << " Cycles: " << chiller_1.get_cycles() << endl;
+    cout << "   # CHILLER II " << " Status " <<  (chiller_2.get_state() ? "ON":"OFF") << " Cycles: " << chiller_2.get_cycles() << endl << endl;
+    display_pumps_status();
 }
