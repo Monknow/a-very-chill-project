@@ -101,9 +101,14 @@ int main()
             counter_cycles+=buildings[building].recirculating_circuit->get_pumps_cycles();
             counter_cycles+=buildings[building].recirculating_circuit->get_FCUs_cycles();
             buildings[building].recirculating_circuit->display_status();
+
+            cout << "########### Confort ###########" << endl;
+            cout << "   Good Confort:   " << buildings[building].good_confort_counter << endl;
+            cout << "   Bad Confort:   " << buildings[building].bad_confort_counter << endl;
         }
         cout << "Total energy.......... " << counter_energy << " W " << endl;
-        cout << "Total cycles.......... " << counter_cycles << " ON/OFF Cycles " << endl;
+        cout << "Total cycles.......... " << counter_cycles << " ON/OFF Cycles " << endl << endl;
+        
         // TODO Print final confort
     return 0;
 }

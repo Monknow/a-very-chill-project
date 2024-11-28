@@ -3,6 +3,8 @@
 
 Place::Place(string instance_name, double instance_temperature_indoor, double instance_temperature_outdoor, double instance_ambient_room_rate, bool instance_busy_hours[24], RecirculatingCircuit *instance_recirculating_circuit)
 {
+    good_confort_counter = 0;
+    bad_confort_counter = 0;
     name = instance_name;
     temperature_indoor = instance_temperature_indoor;
     temperature_outdoor = instance_temperature_outdoor;
@@ -47,10 +49,12 @@ void Place::update_comfort(int hour)
     if (!busy_hours[hour] || temperature_indoor < 25)
     {
         comfort = true;
+        good_confort_counter++;
     }
     else
     {
         comfort = false;
+        bad_confort_counter++;
     }
 }
 

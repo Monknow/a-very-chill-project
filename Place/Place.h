@@ -18,6 +18,8 @@ public:
     void turn_off_pumps(int n);
     bool is_busy(int hour);
     void display_status();
+    int good_confort_counter;
+    int bad_confort_counter;
     string get_name();
     RecirculatingCircuit *recirculating_circuit;
 
