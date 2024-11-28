@@ -23,7 +23,8 @@ void Place::update_temperature(double temperature_chilled_water, double new_temp
 
     if (busy_hours[hour] && temperature_indoor > 18)
     {
-        recirculating_circuit->turn_on_fcu();
+        if (recirculating_circuit->n_of_fcu == 2) {recirculating_circuit->turn_on_both_FCUs();}
+        else {recirculating_circuit->turn_on_fcu(); }
         turn_on_pumps(1);
 
         double temperature_transfer_coefficient = recirculating_circuit->get_temperature_transfer_coefficient();

@@ -23,7 +23,8 @@ int RecirculatingCircuit::get_total_on_time() { return fcu.get_on_time() + get_p
 
 double RecirculatingCircuit::get_temperature_transfer_coefficient() { return 0; }
 
-int RecirculatingCircuit::get_total_energy_consuption() { return fcu.get_power_consumed() + get_pumps_total_energy_consumption(); }
+int RecirculatingCircuit::get_total_energy_consuption() {
+    return fcu.get_power_consumed() + get_pumps_total_energy_consumption(); }
 
 void RecirculatingCircuit::turn_on_fcu() { RecirculatingCircuit::fcu.turn_on(); }
 
@@ -41,16 +42,18 @@ void RecirculatingCircuit::display_status()
 {
     cout << "##### " << name << " RECIRCULATING CIRCUIT #####\n\n";
     cout << "   _____________ FCUs STATUS _____________\n\n";
-    cout << "       # FCU I " << " Status: " << (fcu.get_state() ? "ON" : "OFF") << " Cycles: " << fcu.get_cycles() << endl;
+    cout << "       # FCU I " << " Status: " << (fcu.get_state() ? "ON" : "OFF") << " Cycles: " << fcu.get_cycles() << " On Time: " << fcu.get_on_time() << endl;
 
     // Check for second FCU (Used in Aulas II)
 
     if (n_of_fcu == 2)
     {
-        cout << "       # FCU II " << " Status: " << (fcu_2->get_state() ? "ON" : "OFF") << " Cycles: " << fcu_2->get_cycles() << endl;
+        cout << "       # FCU II " << " Status: " << (fcu.get_state() ? "ON" : "OFF") << " Cycles: " << fcu.get_cycles() << " On Time: " << fcu.get_on_time() << endl;
     }
 
     display_pumps_status();
+
+    cout << "   Energy Consumed:        " << get_total_energy_consuption() << " W\n\n";
 }
 
 void RecirculatingCircuit::turn_on_both_FCUs()
@@ -76,6 +79,8 @@ double AulasIRecirculatingCircuit::get_temperature_transfer_coefficient()
         cout << "Unable to cool, one or more of Aulas I FCU not turned on!!" << endl;
         return 0;
     }
+
+    iterate();
 
     double cooling_capacity{0};
 
@@ -143,6 +148,8 @@ double AulasIIRecirculatingCircuit::get_temperature_transfer_coefficient()
         cout << "Unable to cool, Aulas II FCU not turned on!!" << endl;
         return 0;
     }
+    iterate();
+
 
     double cooling_capacity{0};
 
@@ -198,6 +205,8 @@ double BiblioTECRecirculatingCircuit::get_temperature_transfer_coefficient()
         cout << "Unable to cool, BiblioTEC FCU not turned on!!" << endl;
         return 0;
     }
+    iterate();
+
 
     double cooling_capacity{0};
 

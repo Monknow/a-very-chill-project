@@ -10,7 +10,6 @@ class RecirculatingCircuit : public Circuit
 {
 private:
     string name;
-    int n_of_fcu;
 
 protected:
     FCU fcu;
@@ -30,6 +29,7 @@ public:
     virtual void turn_off_both_FCUs();
     virtual int get_FCUs_cycles();
     virtual double get_temperature_transfer_coefficient();
+    int n_of_fcu;
 };
 
 class AulasIRecirculatingCircuit : public RecirculatingCircuit

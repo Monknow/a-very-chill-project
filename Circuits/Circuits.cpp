@@ -123,10 +123,11 @@ void Circuit::iterate()
 
 void Circuit::display_pumps_status()
 {
-    cout << "_____________ PUMP STATUS _____________\n\n";
+    cout << "   _____________ PUMP STATUS _____________\n\n";
     for (int i = 0; i < n_of_pumps; i++){
-        cout << "   # PUMP " << i << ": Status " <<  (pumps[i].get_state() ? "ON":"OFF") << " Cycles: " << pumps[i].get_cycles() << endl;
+        cout << "        # PUMP " << i << ": Status " <<  (pumps[i].get_state() ? "ON":"OFF") << " Cycles: " << pumps[i].get_cycles() <<" ON Time " << pumps[i].get_on_time() << endl;
     }
+    cout << "   Energy Consumed:        " << get_pumps_total_energy_consumption() << " W\n\n";
     cout << "\n\n\n";
 }
 
