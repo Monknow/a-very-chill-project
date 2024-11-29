@@ -30,7 +30,7 @@ private:
     double temperature_outdoor;
     double temperature_indoor;
     bool busy_hours[24];
-    bool comfort = false;
+    bool comfort = temperature_indoor <= 25;
 };
 
 #endif

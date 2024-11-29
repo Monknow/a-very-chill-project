@@ -23,10 +23,16 @@ void Place::update_temperature(double temperature_chilled_water, double new_temp
     temperature_outdoor = new_temperature_outdoor;
     time++;
 
-    if (busy_hours[hour] && temperature_indoor > 18)
+    if (busy_hours[hour] && temperature_indoor > 18 && temperature_indoor < 23)
     {
-        if (recirculating_circuit->n_of_fcu == 2) {recirculating_circuit->turn_on_both_FCUs();}
-        else {recirculating_circuit->turn_on_fcu(); }
+        if (recirculating_circuit->n_of_fcu == 2)
+        {
+            recirculating_circuit->turn_on_both_FCUs();
+        }
+        else
+        {
+            recirculating_circuit->turn_on_fcu();
+        }
         turn_on_pumps(1);
 
         double temperature_transfer_coefficient = recirculating_circuit->get_temperature_transfer_coefficient();
@@ -37,6 +43,27 @@ void Place::update_temperature(double temperature_chilled_water, double new_temp
         recirculating_circuit->turn_off_fcu();
         turn_off_pumps(1);
     }
+    if (busy_hours[hour] && temperature_indoor > 23)
+    {
+        if (recirculating_circuit->n_of_fcu == 2)
+        {
+            recirculating_circuit->turn_on_both_FCUs();
+        }
+        else
+        {
+            recirculating_circuit->turn_on_fcu();
+        }
+        turn_on_pumps(2);
+
+        double temperature_transfer_coefficient = recirculating_circuit->get_temperature_transfer_coefficient();
+
+        double temperature_delta = temperature_indoor - temperature_chilled_water;
+        temperature_indoor = temperature_indoor - temperature_transfer_coefficient * temperature_delta;
+
+        recirculating_circuit->turn_off_fcu();
+        turn_off_pumps(1);
+    }
+
     else
     {
         double temperature_delta = temperature_outdoor - temperature_indoor;

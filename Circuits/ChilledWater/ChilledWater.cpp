@@ -129,19 +129,17 @@ void ChilledWaterCircuit::update_temperature(double temperature_outdoor)
     {
         not_chill_water(temperature_outdoor);
     }
-
-    cout << "Chilled Water    has used    " << get_total_energy_consuption() << " Kw " << endl;
-
 }
 
 void ChilledWaterCircuit::display_status()
 {
 
-    cout << endl << "############# CHILLED WATER CIRCUIT #############" << endl;
+    cout << endl
+         << "############# CHILLED WATER CIRCUIT #############" << endl;
     cout << "   WATER TEMPERATURE:      " << water_temperature << endl;
     cout << "_____________ CHILLERS STATUS _____________\n\n";
-    cout << "   # CHILLER I " << " Status " <<  (chiller_1.get_state() ? "ON":"OFF") << " Cycles: " << chiller_1.get_cycles() << " ON Time " << chiller_1.get_on_time() << endl;
-    cout << "   # CHILLER II " << " Status " <<  (chiller_2.get_state() ? "ON":"OFF") << " Cycles: " << chiller_2.get_cycles() << " ON Time " << chiller_2.get_on_time() << endl;
+    cout << "   # CHILLER I " << " Status " << (chiller_1.get_state() ? "ON" : "OFF") << " Cycles: " << chiller_1.get_cycles() << " ON Time " << chiller_1.get_on_time() << endl;
+    cout << "   # CHILLER II " << " Status " << (chiller_2.get_state() ? "ON" : "OFF") << " Cycles: " << chiller_2.get_cycles() << " ON Time " << chiller_2.get_on_time() << endl;
 
     display_pumps_status();
 }

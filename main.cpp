@@ -10,7 +10,7 @@ using namespace std;
 
 double day_temperature[24] = {
     15, // 00:00
-    14, // 01:00
+    15, // 01:00
     12, // 02:00
     11, // 03:00
     10, // 04:00
@@ -38,12 +38,12 @@ double day_temperature[24] = {
 int main()
 {
 
-    double initial_temperature_indoor = 25;
+    double initial_temperature_indoor = 16;
     double temperature_outdoor = day_temperature[0];
     double total_energy_used = 0;
 
     ChilledWaterCircuit chilledWaterCircuit{};
-    CondensedWaterCircuit condensedWaterCircuit{chilledWaterCircuit.water_temperature};
+    CondensedWaterCircuit condensedWaterCircuit(22);
 
     AulasI aulasI("Aulas I", initial_temperature_indoor, temperature_outdoor);
     AulasII aulasII("Aulas II", initial_temperature_indoor, temperature_outdoor);
@@ -54,6 +54,21 @@ int main()
         aulasII,
         library,
     };
+
+    // Display initial status
+    cout << "0:00hr" << endl;
+
+    chilledWaterCircuit.update_temperature(temperature_outdoor);
+
+    for (int building = 0; building < 3; building++)
+    {
+        buildings[building].display_status();
+    }
+
+    chilledWaterCircuit.display_status();
+    condensedWaterCircuit.display_status();
+
+    // Run Simulation
 
     for (int hour = 1; hour < 24; hour++)
     {

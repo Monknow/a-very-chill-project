@@ -118,17 +118,17 @@ void CondensedWaterCircuit::update_temperature(double temperature_outdoor)
     {
         not_condense_water(temperature_outdoor);
     }
-
-    cout << "Condensed Water  has used    " << get_total_energy_consuption() << " Kw " << endl;
 }
 
 void CondensedWaterCircuit::display_status()
 {
-    cout << endl << "############ CONDENSED WATER CIRCUIT ############" << endl;
+    cout << endl
+         << "############ CONDENSED WATER CIRCUIT ############" << endl;
     cout << "   WATER TEMPERATURE:      " << water_temperature << endl;
     cout << "_____________ TOWERS STATUS _____________\n\n";
-    cout << "   # TOWER I " << " Status " <<  (tower_1.get_state() ? "ON":"OFF") << " Cycles: " << tower_1.get_cycles() << endl;
-    cout << "   # TOWER II " << " Status " <<  (tower_2.get_state() ? "ON":"OFF") << " Cycles: " << tower_2.get_cycles() << endl << endl;
+    cout << "   # TOWER I " << " Status " << (tower_1.get_state() ? "ON" : "OFF") << " Cycles: " << tower_1.get_cycles() << endl;
+    cout << "   # TOWER II " << " Status " << (tower_2.get_state() ? "ON" : "OFF") << " Cycles: " << tower_2.get_cycles() << endl
+         << endl;
     display_pumps_status();
 }
 
