@@ -57,7 +57,13 @@ int main()
 
     for (int hour = 1; hour < 24; hour++)
     {
-        temperature_outdoor = day_temperature[hour];
+        cout << hour << ":00hr" << endl;
+
+        // You can use the below code to simulate a day in CDMX;
+        // temperature_outdoor = day_temperature[hour];
+
+        cout << "What's the ambient temperature? " << endl;
+        cin >> temperature_outdoor;
 
         // Update Condensed Water
 
@@ -68,8 +74,6 @@ int main()
         chilledWaterCircuit.update_temperature(temperature_outdoor);
 
         // Update And Display Buildings
-
-        cout << hour << ":00hr" << endl;
 
         for (int building = 0; building < 3; building++)
         {
@@ -83,8 +87,8 @@ int main()
     }
 
     // Print Final Values
-    double counter_energy {0};
-    int counter_cycles {0};
+    double counter_energy{0};
+    int counter_cycles{0};
     counter_energy += chilledWaterCircuit.get_total_energy_consuption();
     counter_energy += condensedWaterCircuit.get_total_energy_consuption();
 
@@ -94,21 +98,21 @@ int main()
     counter_cycles += condensedWaterCircuit.get_pumps_cycles();
     counter_cycles += condensedWaterCircuit.get_towers_cycles();
 
-    
     for (int building = 0; building < 3; building++)
-        {
-            counter_energy+=buildings[building].recirculating_circuit->get_total_energy_consuption();
-            counter_cycles+=buildings[building].recirculating_circuit->get_pumps_cycles();
-            counter_cycles+=buildings[building].recirculating_circuit->get_FCUs_cycles();
-            buildings[building].recirculating_circuit->display_status();
+    {
+        counter_energy += buildings[building].recirculating_circuit->get_total_energy_consuption();
+        counter_cycles += buildings[building].recirculating_circuit->get_pumps_cycles();
+        counter_cycles += buildings[building].recirculating_circuit->get_FCUs_cycles();
+        buildings[building].recirculating_circuit->display_status();
 
-            cout << "########### Confort ###########" << endl;
-            cout << "   Good Confort:   " << buildings[building].good_confort_counter << endl;
-            cout << "   Bad Confort:   " << buildings[building].bad_confort_counter << endl;
-        }
-        cout << "Total energy.......... " << counter_energy << " W " << endl;
-        cout << "Total cycles.......... " << counter_cycles << " ON/OFF Cycles " << endl << endl;
-        
-        // TODO Print final confort
+        cout << "########### Confort ###########" << endl;
+        cout << "   Good Confort:   " << buildings[building].good_confort_counter << endl;
+        cout << "   Bad Confort:   " << buildings[building].bad_confort_counter << endl;
+    }
+    cout << "Total energy.......... " << counter_energy << " W " << endl;
+    cout << "Total cycles.......... " << counter_cycles << " ON/OFF Cycles " << endl
+         << endl;
+
+    // TODO Print final confort
     return 0;
 }
